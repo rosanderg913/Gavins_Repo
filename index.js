@@ -1,14 +1,9 @@
-let express = require('express');
-let app = express();
-let ejs = require('ejs');
-const haikus = require('./haikus.json');
-const port = process.env.PORT || 3000;
+import ReactDOM from 'react-dom/client'
+import axios from 'axios'
+import './index.css'
+import App from './App'
 
-app.use(express.static('public'))
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-  res.render('index', {haikus: haikus});
-});
-
-app.listen(port);
+axios.get('http://localhost:3001/api/notes').then(response => {
+  const notes = response.data
+  ReactDOM.createRoot(document.getElementById('root')).render(<App notes={notes} />)
+})
